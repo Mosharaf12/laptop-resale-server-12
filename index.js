@@ -24,6 +24,14 @@ async function run(){
       const result = await usedLaptopsCollection.find(query).toArray()
       res.send(result)
     })
+    
+    app.get('/usedLaptop/:categorey',async(req,res)=>{
+        const categorey = req.params.categorey;
+        const query = {categorey: (categorey)}
+        const result = await usedLaptopsCollection.find(query).toArray()
+        console.log(result);
+        res.send(result)
+    })
 
   }
   finally{
