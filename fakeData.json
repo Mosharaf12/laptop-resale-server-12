@@ -1,0 +1,32 @@
+[
+    {
+        "picture": "https://laptopmall.pk/storage/media/fbjQ4PYlbUi3v12Z3JhvalT7PibvkATZ08C6BDyD.jpg",
+        "name": "Dell-1000 laptop",
+        "sellername": "Hasan",
+        "location": "Chattogram",
+        "resaleprice": "25000",
+        "originalprice": "50000",
+        "yearsofuse": "8",
+        "categorey": "Dell"
+    },
+    {
+        "picture": "https://c1.neweggimages.com/ProductImageCompressAll1280/34-318-668-02.jpg",
+        "name": "Lenovo xsr",
+        "sellername": "Shohel",
+        "location": "Dhaka",
+        "resaleprice": "20000",
+        "originalprice": "45000",
+        "yearsofuse": "6",
+        "categorey": "Lenovo"
+    },
+    {
+        "picture": "https://5.imimg.com/data5/UR/SL/MY-43026980/second-hand-laptop-500x500.jpg",
+        "name": "Acer-p643",
+        "sellername": "Razzak",
+        "location": "Comilla",
+        "resaleprice": "30000",
+        "originalprice": "50000",
+        "yearsofuse": "4",
+        "categorey": "Acer" 
+    }
+]
