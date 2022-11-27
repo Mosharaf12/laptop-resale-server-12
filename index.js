@@ -26,6 +26,11 @@ async function run(){
       const result = await usedLaptopsCollection.find(query).toArray()
       res.send(result)
     })
+    app.post('/usedLaptop',async(req,res)=>{
+      const product = req.body
+      const result = await usedLaptopsCollection.insertOne(product)
+      res.send(result)
+    })
     
     app.get('/usedLaptop/:categorey',async(req,res)=>{
         const categorey = req.params.categorey;
