@@ -37,7 +37,6 @@ async function run(){
         const categorey = req.params.categorey;
         const query = {categorey: (categorey)}
         const result = await usedLaptopsCollection.find(query).toArray()
-      
         res.send(result)
     })
     //  find the seller product 
@@ -46,15 +45,20 @@ async function run(){
         const query = {user: (email)}
         const result = await usedLaptopsCollection.find(query).toArray()
         res.send(result)
-     
+    })
 
+    app.delete('/myproduct',async(req,res)=>{
+      const id = req.query.id;
+      const query = {_id: ObjectId(id)}
+      const result = await usedLaptopsCollection.deleteOne(query)
+      console.log(result);
+      res.send(result)
     })
 
     app.post('/users',async(req,res)=>{
       const user = req.body;
       const result = await usersCollection.insertOne(user)
       res.send(result)
-
     })
 
     app.get('/laptop/:id',async(req,res)=>{
@@ -62,7 +66,6 @@ async function run(){
       const query = {_id: ObjectId(id)}
       const result = await usedLaptopsCollection.findOne(query)
       res.send(result)
-   
     })
     // add booking product 
     app.post('/booking',async(req,res)=>{
