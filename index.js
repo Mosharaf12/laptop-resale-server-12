@@ -20,6 +20,7 @@ async function run(){
   try{
     const usedLaptopsCollection = client.db('laptopResaleMarket').collection('usedLaptop')
     const usersCollection = client.db('laptopResaleMarket').collection('users')
+    const bookingsCollection = client.db('laptopResaleMarket').collection('bookings')
 
     app.get('/usedLaptop',async(req,res)=>{
       const query= {}
@@ -36,8 +37,17 @@ async function run(){
         const categorey = req.params.categorey;
         const query = {categorey: (categorey)}
         const result = await usedLaptopsCollection.find(query).toArray()
-        console.log(result);
+      
         res.send(result)
+    })
+    //  find the seller product 
+    app.get('/myproduct',async(req,res)=>{
+        const email = req.query.email;
+        const query = {user: (email)}
+        const result = await usedLaptopsCollection.find(query).toArray()
+        res.send(result)
+     
+
     })
 
     app.post('/users',async(req,res)=>{
@@ -52,6 +62,27 @@ async function run(){
       const query = {_id: ObjectId(id)}
       const result = await usedLaptopsCollection.findOne(query)
       res.send(result)
+   
+    })
+    // add booking product 
+    app.post('/booking',async(req,res)=>{
+      const booking = req.body;
+      const result = await bookingsCollection.insertOne(booking)
+      res.send(result);
+    })
+    app.get('/booking',async(req,res)=>{
+      const email = req.query.email;
+      const query = {email: (email)}
+      const bookings = await bookingsCollection.find(query).toArray()
+      res.send(bookings);
+
+    })
+    app.delete('/booking',async(req,res)=>{
+      const id = req.query.id;
+      console.log(id)
+      const query = {_id: ObjectId(id)}
+      const result = await bookingsCollection.deleteOne(query)
+      res.send(result);
       console.log(result);
     })
 
