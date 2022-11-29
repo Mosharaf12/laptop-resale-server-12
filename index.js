@@ -40,9 +40,10 @@ async function run(){
         res.send(result)
     })
     //  find the seller product 
+
     app.get('/myproduct',async(req,res)=>{
         const email = req.query.email;
-        const query = {user: (email)}
+        const query = {useremail: (email)}
         const result = await usedLaptopsCollection.find(query).toArray()
         res.send(result)
     })
@@ -79,14 +80,43 @@ async function run(){
 
     })
 
-    app.get('/laptop/:id',async(req,res)=>{
+    app.get('/users/:email', async(req, res)=> {
+      const email = req.params.email;
+      const query = {email: email};
+      const result = await usersCollection.find(query).toArray();
+      res.send(email);
+    
+  });
+
+  app.delete('/users', async(req,res)=>{
+    const id = req.query.id;
+    const query = {_id: ObjectId(id)}
+    const result = await usersCollection.deleteOne(query)
+    res.send(result);
+  })
+
+  //get admin route 
+  app.get('/users/admin/:email',async(req,res)=>{
+    const email = req.params.email;
+    const query = {email}
+    const user = await usersCollection.findOne(query)
+    res.send({isAdmin: user?.role === 'admin'});
+})
+app.get('/users/seller/:email', async(req, res) => {
+  const email = req.params.email;
+  const query =  { email };
+  const user = await usersCollection.findOne(query);
+  res.send({isSeller: user?.role === 'seller'})
+});
+
+app.get('/laptop/:id',async(req,res)=>{
       const id = req.params.id;
       const query = {_id: ObjectId(id)}
       const result = await usedLaptopsCollection.findOne(query)
       res.send(result)
     })
     // add booking product 
-    app.post('/booking',async(req,res)=>{
+app.post('/booking',async(req,res)=>{
       const booking = req.body;
       const result = await bookingsCollection.insertOne(booking)
       res.send(result);
@@ -98,15 +128,13 @@ async function run(){
       res.send(bookings);
 
     })
-    app.delete('/booking',async(req,res)=>{
-      const id = req.query.id;
-      console.log(id)
-      const query = {_id: ObjectId(id)}
-      const result = await bookingsCollection.deleteOne(query)
-      res.send(result);
-      console.log(result);
-    })
 
+   app.delete('/booking', async(req, res) => {
+            const id = req.query.id;
+            const query = {_id: ObjectId(id)};
+            const result = await bookingsCollection.deleteOne(query);
+            res.send(result)
+        })
   }
   finally{
 
