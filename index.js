@@ -60,6 +60,24 @@ async function run(){
       const result = await usersCollection.insertOne(user)
       res.send(result)
     })
+    app.get('/users', async(req,res)=>{
+      const query = {}
+      const result = await usersCollection.find(query).toArray()
+      res.send(result)
+    })
+    app.put('/users',async(req, res)=>{
+      const id = req.query.id;
+      const filter = {_id: ObjectId(id)};
+            const options = {upsert: true};
+            const updatedDoc = {
+            $set: {
+              verified: true
+            }
+          }
+          const result = await usersCollection.updateOne(filter, updatedDoc, options)
+          res.send(result)
+
+    })
 
     app.get('/laptop/:id',async(req,res)=>{
       const id = req.params.id;
