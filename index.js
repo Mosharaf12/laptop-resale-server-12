@@ -39,6 +39,26 @@ async function run(){
         const result = await usedLaptopsCollection.find(query).toArray()
         res.send(result)
     })
+
+    app.put('/usedLaptop', async(req, res) => {
+      const id = req.query.id;
+      const filter = {_id: ObjectId(id)};
+      const options = {upsert: true};
+      const updatedDoc = {
+      $set: {
+        report: true
+      }
+    }
+    const result = await usedLaptopsCollection.updateOne(filter, updatedDoc, options)
+    res.send(result)
+  });
+
+  app.get('/allReported', async(req, res) => {
+    const report = req.query.report;
+    const query = {report: true};
+    const result = await usedLaptopsCollection.find(query).toArray();
+    res.send(result)
+})
     //  find the seller product 
 
     app.get('/myproduct',async(req,res)=>{
@@ -129,12 +149,34 @@ app.post('/booking',async(req,res)=>{
 
     })
 
+    app.put('/myproduct', async(req, res) => {
+      const id = req.query.id;
+      const filter = {_id: ObjectId(id)};
+      const options = {upsert: true};
+      const updatedDoc = {
+      $set: {
+        advertising: true
+      }
+    }
+    const result = await usedLaptopsCollection.updateOne(filter, updatedDoc, options)
+    res.send(result)
+  })
+//filter items for advertising 
+
+  app.get('/advertisingProduct', async(req, res) => {
+      const query = {};
+      const phones = await usedLaptopsCollection.find(query).toArray();
+      const advertising = phones.filter(ph => ph.advertising === true) 
+      res.send(advertising)
+  });
+
    app.delete('/booking', async(req, res) => {
             const id = req.query.id;
             const query = {_id: ObjectId(id)};
             const result = await bookingsCollection.deleteOne(query);
             res.send(result)
         })
+
   }
   finally{
 
